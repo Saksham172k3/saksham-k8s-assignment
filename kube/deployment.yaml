@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getting-started
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: getting-started
+  template:
+    metadata:
+      labels:
+        app: getting-started
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - ap-south-1b
+      containers:
+        - name: getting-started
+          image: 514144652421.dkr.ecr.ap-south-1.amazonaws.com/getting-started:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: data-storage
+              mountPath: /usr/src/app/data
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: ebs-claim
