@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: getting-started
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: getting-started
@@ -12,15 +12,6 @@ spec:
       labels:
         app: getting-started
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: topology.kubernetes.io/zone
-                    operator: In
-                    values:
-                      - ap-south-1b
       containers:
         - name: getting-started
           image: 514144652421.dkr.ecr.ap-south-1.amazonaws.com/getting-started:latest
