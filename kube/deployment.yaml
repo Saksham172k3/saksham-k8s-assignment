@@ -28,7 +28,7 @@ spec:
             - containerPort: 3000
           volumeMounts:
             - name: data-storage
-              mountPath: /usr/src/app/data
+              mountPath: /etc/todos/
       volumes:
         - name: data-storage
           persistentVolumeClaim:
